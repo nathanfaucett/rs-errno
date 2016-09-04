@@ -8,7 +8,7 @@ macros for creating number based errors
 extern crate errno;
 
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Eq, PartialEq)]
 pub enum ErrorCode {
     SomeErrorCode = 0,
 }
