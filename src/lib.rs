@@ -16,12 +16,15 @@ macro_rules! create_errno {
         }
 
         impl $Name {
-
+            
+            #[inline(always)]
             pub fn new(errno: $EnumType) -> Self {
                 $Name {
                     errno: errno
                 }
             }
+            
+            #[inline]
             pub fn from(errno: u8) -> Self {
                 assert!(errno < $strings.len() as u8);
                 $Name {
@@ -29,6 +32,7 @@ macro_rules! create_errno {
                 }
             }
 
+            #[inline]
             pub fn get_message(&self) -> &str {
                 if let Some(description) = $strings.get(self.errno as usize) {
                     description
@@ -36,21 +40,24 @@ macro_rules! create_errno {
                     "Unknown Error"
                 }
             }
-            pub fn get_number(&self) -> u8 {
+            #[inline(always)]
+            pub fn get_error_code(&self) -> u8 {
                 self.errno as u8
             }
         }
 
         impl $crate::Debug for $Name {
+            #[inline(always)]
             fn fmt(&self, f: &mut $crate::Formatter) -> $crate::Result<(), $crate::Error> {
                 f.write_str(self.get_message())
             }
         }
 
         impl $crate::Display for $Name {
+            #[inline(always)]
             fn fmt(&self, f: &mut $crate::Formatter) -> $crate::Result<(), $crate::Error> {
                 f.write_str(self.get_message())
             }
         }
-    )
+    );
 }
