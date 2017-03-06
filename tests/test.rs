@@ -26,8 +26,8 @@ create_errno!(Error, ErrorCode, ERROR);
 fn test_enums() {
     let error = Error::new(ErrorCode::SomeErrorCode);
 
-    assert_eq!(error.get_number(), 0);
-    assert_eq!(error.get_message(), "Some Error Message");
+    assert_eq!(error.code(), 0);
+    assert_eq!(error.message(), "Some Error Message");
     assert_eq!(format!("{:?}", error), "Some Error Message");
 }
 
@@ -35,7 +35,7 @@ fn test_enums() {
 fn test_number() {
     let error = Error::from(0);
 
-    assert_eq!(error.get_number(), 0);
-    assert_eq!(error.get_message(), "Some Error Message");
+    assert_eq!(error.code(), 0);
+    assert_eq!(error.message(), "Some Error Message");
     assert_eq!(format!("{:?}", error), "Some Error Message");
 }
